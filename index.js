@@ -1,29 +1,7 @@
 var http = require('http');
 var fs=require('fs');
 const url=require('url');
-
-const httpRequest = {
-    GET: function(URLpath, res) {
-        if(fs.existsSync('.' + URLpath.pathname + '.json')){
-            jsonFile = fs.readFileSync(`.${URLpath.pathname}.json`).toString()
-            res.write(`
-                <textarea rows = "20" cols = "60" style='width: 600px'>${jsonFile}</textarea>
-            `);
-            console.log('xxxxx');
-        }else{
-            res.write("test");
-        }
-    },
-    PUT: function() {
-
-    },
-    POST: function() {
-
-    },
-    DELETE: function() {
-
-    }
-}
+var api = require('./assets/js/api.js');
 
 //create a server object:
 http.createServer(function (req, res) {
@@ -35,8 +13,8 @@ http.createServer(function (req, res) {
     let footer = fs.readFileSync("view/footer.html");
 
     res.write(header);
-    
-    httpRequest.GET(url_components, res);
+
+    api.httpRequest.GET(url_components, res);
 
     res.write(footer);
 
