@@ -5,12 +5,16 @@ var api = require('./assets/js/api.js');
 
 //create a server object:
 http.createServer(function (req, res) {
+    if (req.url === '../public/stylesheets/styles.css') {
+        res.sendFile("public/stylesheets/styles.css");
+    }
+
     let url_components=url.parse(req.url,true);
 
     res.writeHead(200, {'Content-Type': 'text/html'});
 
-    let header = fs.readFileSync("view/header.html");
-    let footer = fs.readFileSync("view/footer.html");
+    let header = fs.readFileSync("view/header.html", 'utf8');
+    let footer = fs.readFileSync("view/footer.html", 'utf8');
 
     res.write(header);
 
