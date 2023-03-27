@@ -51,14 +51,10 @@ const httpRequest = {
             fs.unlinkSync('.' + URLpath.pathname + '.json');
 
             // Send a response to the client
-            res.writeHead(200, {'Content-Type': 'application/json'});
-            res.write(JSON.stringify({success: true}));
-            res.end();
+            return JSON.stringify({success: true});
         } else {
             // Send a response to the client
-            res.writeHead(404, {'Content-Type': 'application/json'});
-            res.write(JSON.stringify({success: false, error: 'Resource not found'}));
-            res.end();
+            return JSON.stringify({success: false, error: 'Resource not found'});
         }
     }
 }
