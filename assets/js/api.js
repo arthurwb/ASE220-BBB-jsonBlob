@@ -1,17 +1,18 @@
 var fs=require('fs');
 
 const httpRequest = {
-    GET: function(URLpath, res) {
-        if(fs.existsSync('.' + URLpath.pathname + '.json')){
-            jsonFile = fs.readFileSync(`.${URLpath.pathname}.json`).toString()
-            res.write(`
-                <textarea rows="20" cols="60" style="width: 600px">${jsonFile}</textarea>
-            `);
-        }else{
-            res.write(fs.readFileSync("view/header.html"));
+    GET: function(URLpath) {
+        console.log("<GET>");
+        if (fs.existsSync('.' + URLpath.pathname + '.json')) {
+            jsonFile = fs.readFileSync(`.${URLpath.pathname}.json`).toString();
+            return jsonFile;
+        } else {
+            // Send a response to the client
+            return JSON.stringify({success: false, error: 'Resource not found'});
         }
     },
     PUT: function(URLpath, reqBody, res) {
+        console.log("<PUT>");
         // Parse the request body as JSON
         const jsonData = JSON.parse(reqBody);
 
@@ -24,6 +25,7 @@ const httpRequest = {
         res.end();
     },
     POST: function(URLpath, reqBody, res) {
+        console.log("<POST>");
         // Parse the request body as JSON
         const jsonData = JSON.parse(reqBody);
 
@@ -42,6 +44,7 @@ const httpRequest = {
         res.end();
     },
     DELETE: function(URLpath, res) {
+        console.log("<DELETE>");
         // Check if the JSON file exists
         if (fs.existsSync('.' + URLpath.pathname + '.json')) {
             // Delete the JSON file
