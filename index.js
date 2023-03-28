@@ -16,8 +16,12 @@ http.createServer(function (req, res) {
             res.end();
             break;
         case "PUT":
-            api.httpRequest.PUT();
-            break;
+            api.httpRequest.PUT(req, url_components, (putResponse) => {
+                res.writeHead(200,{'Content-Type':'application/json'});
+                res.write(putResponse, 'utf8');
+                res.end();
+            });
+            break;            
         case "POST":
             api.httpRequest.POST(req, (postResponse) => {
                 res.writeHead(200,{'Content-Type':'application/json'});
