@@ -11,19 +11,21 @@ const httpRequest = {
             return JSON.stringify({success: false, error: 'Resource not found'});
         }
     },
-    PUT: function(URLpath, reqBody, res) {
+    PUT: function(req, URLpath, callback) {
         console.log("<PUT>");
-        // Parse the request body as JSON
-        const jsonData = JSON.parse(reqBody);
 
-        // Write the JSON data to a file
-        fs.writeFileSync('.' + URLpath.pathname + '.json', JSON.stringify(jsonData));
+        let body = '';
+        req.on('data', (chunk) => {
+            body += chunk.toString();
+        });
+        req.on('end', () => {
+            const putData = JSON.parse(body);
 
-        // Send a response to the client
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.write(JSON.stringify({success: true}));
-        res.end();
-    },
+            fs.writeFileSync(`.${URLpath.pathname}.json`, JSON.stringify(putData));
+            let response = fs.readFileSync(`.${URLpath.pathname}.json`).toString();
+            callback(response);
+        });
+    },    
     POST: function(req, callback) {
         console.log('<POST>');
 
@@ -40,7 +42,7 @@ const httpRequest = {
 
             fs.writeFileSync(`./data/${newId}.json`, JSON.stringify(data));
 
-            let response = fs.readFileSync(`/data/${newId}.json`).toString();
+            let response = fs.readFileSync(`./data/${newId}.json`).toString();
             callback(response);
         });
     },
