@@ -24,24 +24,25 @@ const httpRequest = {
         res.write(JSON.stringify({success: true}));
         res.end();
     },
-    POST: function(URLpath, reqBody, res) {
-        console.log("<POST>");
-        // Parse the request body as JSON
-        const jsonData = JSON.parse(reqBody);
+    POST: function(req, callback) {
+        console.log('<POST>');
 
-        // Generate a new ID for the JSON data
-        const newId = Math.floor(Math.random() * 1000000);
+        let body = '';
+        req.on('data', (chunk) => {
+            if (chunk) {
+                body += chunk.toString();
+            }
+        });
+        req.on('end', () => {
+            const data = JSON.parse(body);
 
-        // Add the ID to the JSON data
-        jsonData.id = newId;
+            let newId = Math.floor(Math.random() * 1000000);
 
-        // Write the JSON data to a file
-        fs.writeFileSync('.' + URLpath.pathname + `/${newId}.json`, JSON.stringify(jsonData));
+            fs.writeFileSync(`./data/${newId}.json`, JSON.stringify(data));
 
-        // Send a response to the client
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.write(JSON.stringify({success: true, id: newId}));
-        res.end();
+            let response = fs.readFileSync(`/data/${newId}.json`).toString();
+            callback(response);
+        });
     },
     DELETE: function(URLpath, res) {
         console.log("<DELETE>");
@@ -51,14 +52,10 @@ const httpRequest = {
             fs.unlinkSync('.' + URLpath.pathname + '.json');
 
             // Send a response to the client
-            res.writeHead(200, {'Content-Type': 'application/json'});
-            res.write(JSON.stringify({success: true}));
-            res.end();
+            return JSON.stringify({success: true, message: `${URLpath.pathname} has been deleted`});
         } else {
             // Send a response to the client
-            res.writeHead(404, {'Content-Type': 'application/json'});
-            res.write(JSON.stringify({success: false, error: 'Resource not found'}));
-            res.end();
+            return JSON.stringify({success: false, error: 'Resource not found'});
         }
     }
 }
