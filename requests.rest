@@ -5,9 +5,13 @@
 GET http://localhost:8080/data/120235456
 
 ### POST REQUEST 
-POST http://localhost:8080 content-type: application/json
+POST http://localhost:8080 
+content-type: application/json
 
-{"test":"xxxxxxxxxxxxxxxxxxxxxxxxx"}
+{
+    "test": "xxxxxxxxxxxxxxxxxxxxxxxxx"
+
+}
 
 ### PUT REQUEST 
 PUT http://localhost:8080 content-type: application/json
