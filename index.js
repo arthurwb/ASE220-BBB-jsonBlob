@@ -13,19 +13,23 @@ http.createServer(function (req, res) {
             let getResponse = api.httpRequest.GET(url_components);
             res.writeHead(200,{'Content-Type':'application/json'});
             res.write(getResponse, 'utf8');
+            res.end();
             break;
         case "PUT":
             api.httpRequest.PUT();
             break;
         case "POST":
-            api.httpRequest.POST();
+            api.httpRequest.POST(req, (postResponse) => {
+                res.writeHead(200,{'Content-Type':'application/json'});
+                res.write(postResponse, 'utf8');
+                res.end();
+            });
             break;
         case "DELETE":
             let deleteResponse = api.httpRequest.DELETE(url_components);
             res.writeHead(200,{'Content-Type':'application/json'});
             res.write(deleteResponse, 'utf8');
+            res.end();
             break;
     }
-
-    res.end();
 }).listen(8080); //the server object listens on port 8080
