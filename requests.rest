@@ -14,13 +14,12 @@ content-type: application/json
 }
 
 ### PUT REQUEST 
-PUT http://localhost:8080/data/120235456
-content-type: application/json
+PUT http://localhost:8080/data/454654654
 
 {
-    "hello":"world3"
-            
+    "test": "xxxxxxxxxxxxxxxxxxxxxxxxx"
+
 }
 
 ### DELETE REQUEST
- DELETE http://localhost:8080/data/120235456
+ DELETE http://localhost:8080/data/372364

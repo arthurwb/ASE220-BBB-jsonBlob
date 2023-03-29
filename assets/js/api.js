@@ -20,15 +20,19 @@ const httpRequest = {
         });
         req.on('end', () => {
             const putData = JSON.parse(body);
-
-            fs.writeFileSync(`.${URLpath.pathname}.json`, JSON.stringify(putData));
-            let response = fs.readFileSync(`.${URLpath.pathname}.json`).toString();
+            let response = ''
+            if (fs.existsSync(`.${URLpath.pathname}.json`)) {
+                fs.writeFileSync(`.${URLpath.pathname}.json`, JSON.stringify(putData));
+                response = fs.readFileSync(`.${URLpath.pathname}.json`).toString();
+            }
+            else {
+                response = JSON.stringify({success: false, error: 'Resource not found'});
+            }
             callback(response);
         });
     },    
     POST: function(req, callback) {
         console.log('<POST>');
-
         let body = '';
         req.on('data', (chunk) => {
             if (chunk) {
