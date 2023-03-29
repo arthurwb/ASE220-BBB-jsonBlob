@@ -14,10 +14,7 @@ test
 PUT http://localhost:8080/data/120235456
 content-type: application/json
 
-{
-    "hello":"world3"
-            
-}
+test
 
 ### DELETE REQUEST
 DELETE http://localhost:8080/data/120235456

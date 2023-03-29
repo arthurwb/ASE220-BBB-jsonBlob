@@ -19,14 +19,19 @@ const httpRequest = {
             body += chunk.toString();
         });
         req.on('end', () => {
-            const putData = JSON.parse(body);
+            let response;
+            try {
+                const putData = JSON.parse(body);
 
-            fs.writeFileSync(`.${URLpath.pathname}.json`, JSON.stringify(putData));
-            let response = fs.readFileSync(`.${URLpath.pathname}.json`).toString();
+                fs.writeFileSync(`.${URLpath.pathname}.json`, JSON.stringify(putData));
+                response = fs.readFileSync(`.${URLpath.pathname}.json`).toString();
+            } catch (error) {
+                response = JSON.stringify({success: false, error: 'PUT error'});
+            }
             callback(response);
         });
     },    
-    POST: function(req, res, callback) {
+    POST: function(req, callback) {
         console.log('<POST>');
         
         let body = '';

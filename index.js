@@ -23,7 +23,7 @@ http.createServer(function (req, res) {
             });
             break;            
         case "POST":
-            api.httpRequest.POST(req, res, (postResponse) => {
+            api.httpRequest.POST(req, (postResponse) => {
                 res.writeHead(200,{'Content-Type':'application/json'});
                 res.write(postResponse, 'utf8');
                 res.end();
