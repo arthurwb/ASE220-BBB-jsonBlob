@@ -26,26 +26,34 @@ const httpRequest = {
             callback(response);
         });
     },    
-    POST: function(req, callback) {
+    POST: function(req, res, callback) {
         console.log('<POST>');
-
+        
         let body = '';
         req.on('data', (chunk) => {
             if (chunk) {
+                console.log(chunk);
+                console.log(chunk.toString());
                 body += chunk.toString();
             }
         });
         req.on('end', () => {
-            const data = JSON.parse(body);
+            let response;
+            try {
+                const data = JSON.parse(body);
 
-            let newId = Math.floor(1000000 + Math.random() * 9000000);
-            while (fs.existsSync(`./data/${newId}.json`)) {
-                newId = newId + 1;
+                    
+                let newId = Math.floor(1000000 + Math.random() * 9000000);
+                while (fs.existsSync(`./data/${newId}.json`)) {
+                    newId = newId + 1;
+                }
+
+                fs.writeFileSync(`./data/${newId}.json`, JSON.stringify(data));
+
+                response = fs.readFileSync(`./data/${newId}.json`).toString();
+            } catch (error) {
+                response = JSON.stringify({success: false, error: 'POST error'});
             }
-
-            fs.writeFileSync(`./data/${newId}.json`, JSON.stringify(data));
-
-            let response = fs.readFileSync(`./data/${newId}.json`).toString();
             callback(response);
         });
     },
