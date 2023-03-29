@@ -42,7 +42,10 @@ const httpRequest = {
         req.on('end', () => {
             const data = JSON.parse(body);
 
-            let newId = Math.floor(Math.random() * 1000000);
+            let newId = Math.floor(1000000 + Math.random() * 9000000);
+            while (fs.existsSync(`./data/${newId}.json`)) {
+                newId = newId + 1;
+            }
 
             fs.writeFileSync(`./data/${newId}.json`, JSON.stringify(data));
 
