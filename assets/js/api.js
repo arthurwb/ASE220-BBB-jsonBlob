@@ -40,8 +40,6 @@ const httpRequest = {
         let body = '';
         req.on('data', (chunk) => {
             if (chunk) {
-                console.log(chunk);
-                console.log(chunk.toString());
                 body += chunk.toString();
             }
         });
