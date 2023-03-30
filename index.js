@@ -6,7 +6,7 @@ var api = require('./assets/js/api.js');
 //create a server object:
 http.createServer(function (req, res) {
 
-    let url_components=url.parse(req.url,true);
+    let url_components=url.parse(req.url, true);
 
     switch (req.method) {
         case "GET":
