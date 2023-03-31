@@ -21,7 +21,12 @@ Rubric
 There are 10 points available for this assignment:
 
 +6 points: the POST, GET, PUT, and DELETE APIs work as expected (1.5 points for each API)
+
 +1 point: the project contains a test file for checking if the routes work
+
 +2 points: the project folder is tidy and well organized and data is stored appropriately without any possibility of conflicting file names when creating a new JSON document
+
 +1 point: the application checks if the data sent in the body is formatted according to the JSON file format before processing them
+
 +1 point: the application checks if the file contains JSON data before encoding them into the response body
+
