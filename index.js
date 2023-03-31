@@ -16,6 +16,7 @@ http.createServer(function (req, res) {
         case "GET":
             // Call the GET function from the api module and send back the response to the client when done
             let getResponse = api.httpRequest.GET(url_components);
+            // Below formats/sends the reponse based on the api reponse
             res.writeHead(200,{'Content-Type':'application/json'});
             res.write(getResponse, 'utf8');
             res.end();
@@ -23,6 +24,7 @@ http.createServer(function (req, res) {
         case "PUT":
             // Call the PUT function from the api module and send back the response to the client
             api.httpRequest.PUT(req, url_components, (putResponse) => {
+                // Below formats/sends the reponse based on the api reponse
                 res.writeHead(200,{'Content-Type':'application/json'});
                 res.write(putResponse, 'utf8');
                 res.end();
@@ -31,6 +33,7 @@ http.createServer(function (req, res) {
         case "POST":
             // Call the POST function from the api module and send back the response to the client
             api.httpRequest.POST(req, (postResponse) => {
+                // Below formats/sends the reponse based on the api reponse
                 res.writeHead(200,{'Content-Type':'application/json'});
                 res.write(postResponse, 'utf8');
                 res.end();
@@ -39,6 +42,7 @@ http.createServer(function (req, res) {
         case "DELETE":
             // Call the DELETE function from the api module and send back the response to the client
             let deleteResponse = api.httpRequest.DELETE(url_components);
+            // Below formats/sends the reponse based on the api reponse
             res.writeHead(200,{'Content-Type':'application/json'});
             res.write(deleteResponse, 'utf8');
             res.end();
