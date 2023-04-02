@@ -42,7 +42,7 @@ const httpRequest = {
                 }
             } catch (error) {
                 // If there is an error parsing the data, send a response to the client indicating there was a PUT error
-                response = JSON.stringify({success: false, error: 'PUT error'});
+                response = JSON.stringify({success: false, error: 'Error in entered json'});
             }
             // Call the provided callback function and pass the response as an argument
             callback(response);
@@ -56,8 +56,6 @@ const httpRequest = {
         // Read the request body
         req.on('data', (chunk) => {
             if (chunk) {
-                console.log(chunk);
-                console.log(chunk.toString());
                 body += chunk.toString();
             }
         });
@@ -76,7 +74,7 @@ const httpRequest = {
                 response = fs.readFileSync(`./data/${newId}.json`).toString();
             } catch (error) {
                 // If there is an error parsing the data, send a response to the client indicating there was a POST error
-                response = JSON.stringify({success: false, error: 'POST error'});
+                response = JSON.stringify({success: false, error: 'Error in entered json'});
             }
             // Call the provided callback function and pass the response as an argument
             callback(response);
