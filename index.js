@@ -9,6 +9,11 @@ var api = require('./assets/js/api.js');
 //create a server object:
 http.createServer(function (req, res) {
 
+    // Enable CORS headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
     // Parse the URL of the incoming request
     let url_components=url.parse(req.url, true);
 
